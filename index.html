@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#4CAF50">
+  <title>MoodRx</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f4f7;
+      color: #333;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      padding: 1rem;
+    }
+    select, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      font-size: 1rem;
+    }
+    .result {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MoodRx</h1>
+    <p>Your mood-based remedy assistant</p>
+  </header>
+  <div class="container">
+    <label for="mood">Select your mood:</label>
+    <select id="mood">
+      <option value="">--Choose--</option>
+      <option value="anxious">Anxious</option>
+      <option value="tired">Tired</option>
+      <option value="pms">Period Pain</option>
+      <option value="jetlag">Jetlagged</option>
+      <option value="low_mood">Low Mood</option>
+      <option value="cant_sleep">Can't Sleep</option>
+    </select>
+    <button onclick="getRemedy()">Get Remedy</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const remedies = {
+      anxious: {
+        otc: "Diphenhydramine 25mg (short term use only)",
+        natural: "Chamomile tea, lavender oil inhalation",
+        lifestyle: "Deep breathing, journaling, 10 min walk"
+      },
+      tired: {
+        otc: "Vitamin B complex or Iron if deficient",
+        natural: "Ashwagandha, hydration, power nap",
+        lifestyle: "Morning sunlight, limit screen at night"
+      },
+      pms: {
+        otc: "Mefenamic acid 250mg after food",
+        natural: "Hot water bag, ginger tea",
+        lifestyle: "Track cycle, gentle yoga"
+      },
+      jetlag: {
+        otc: "Melatonin 3mg before bed (short-term)",
+        natural: "Chamomile tea, lemon balm",
+        lifestyle: "Sync to local time, light exposure in morning"
+      },
+      low_mood: {
+        otc: "B-complex with folic acid",
+        natural: "Dark chocolate, turmeric milk",
+        lifestyle: "Walk outdoors, talk to a friend"
+      },
+      cant_sleep: {
+        otc: "Diphenhydramine 25mg (occasional use)",
+        natural: "Warm milk, lavender pillow spray",
+        lifestyle: "No caffeine after 6pm, fixed bedtime"
+      }
+    };
+
+    function getRemedy() {
+      const mood = document.getElementById('mood').value;
+      const resultDiv = document.getElementById('result');
+
+      if (remedies[mood]) {
+        const r = remedies[mood];
+        resultDiv.innerHTML = `
+          <h3>Recommended Remedies:</h3>
+          <strong>OTC:</strong> ${r.otc}<br>
+          <strong>Natural:</strong> ${r.natural}<br>
+          <strong>Lifestyle:</strong> ${r.lifestyle}
+        `;
+      } else {
+        resultDiv.innerHTML = '<em>Please select a mood to get started.</em>';
+      }
+    }
+  </script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+  }
+</script>
+
+
+</body>
+</html>
