@@ -19,12 +19,14 @@ To create a quick-access, mood-based remedy assistant that:
 - Offers a switch between **Allopathic** and **Natural** options
 - Encourages healthy lifestyle habits
 - Gives **"red flag" warnings** to see a doctor if needed
-
+---
 
 ## 👤 Who It's For:
 
 - Healthy adults seeking non-emergency relief for mild, temporary issues
+  
 -People who want alternatives to medication (natural/lifestyle options)
+
 -Those needing quick reference for common ailments (e.g., travel insomnia)
 
 ---
