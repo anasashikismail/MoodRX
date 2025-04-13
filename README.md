@@ -23,11 +23,11 @@ To create a quick-access, mood-based remedy assistant that:
 
 ## 👤 Who It's For:
 
-- Healthy adults seeking non-emergency relief for mild, temporary issues
+ - Healthy adults seeking non-emergency relief for mild, temporary issues
   
--People who want alternatives to medication (natural/lifestyle options)
+ -People who want alternatives to medication (natural/lifestyle options)
 
--Those needing quick reference for common ailments (e.g., travel insomnia)
+ -Those needing quick reference for common ailments (e.g., travel insomnia)
 
 ---
 
