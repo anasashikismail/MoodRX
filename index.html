@@ -41,7 +41,7 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -49,7 +49,6 @@
     }
     button:hover {
       background-color: #76BEE8;
-      transform: translateY(-2px);
     }
     button span {
       font-size: 1.8rem;
@@ -66,7 +65,7 @@
       background-color: #FFF3CD;
       border-left: 4px solid #FFC107;
       padding: 1rem;
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       border-radius: 4px;
       font-size: 0.9rem;
     }
@@ -74,12 +73,35 @@
       color: #856404;
     }
     .category {
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
     .category-title {
       color: #4CAF50;
       font-weight: bold;
       margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .dosage {
+      background-color: #f8f9fa;
+      padding: 0.8rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      border-left: 3px solid #4CAF50;
+    }
+    .condition-title {
+      color: #2c3e50;
+      margin-bottom: 1.2rem;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+    .recommendation-title {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #2c3e50;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid #4CAF50;
     }
   </style>
 </head>
@@ -118,7 +140,7 @@
     <div id="warning" class="warning">
       <strong>Important Safety Information:</strong><br>
       • These are general suggestions only, not medical advice<br>
-      • Consult a healthcare provider before starting new supplements<br>
+      • Consult a healthcare provider before starting new medications<br>
       • Discontinue use if any adverse reactions occur<br>
       • Persistent symptoms may require professional evaluation
     </div>
@@ -139,10 +161,17 @@
         note: "Iron/B12 only if blood test confirms deficiency."
       },
       pms: {
-        otc: "Ibuprofen 200-400mg (with food) or heat patch",
+        otc: `<strong>Mefenamic acid</strong><br>
+              <div class="dosage">
+                <strong>Recommended Dosage:</strong><br>
+                • Adults and children 14+ years: 500mg initially, then 250mg every 6 hours as needed<br>
+                • Maximum duration: 3 days<br>
+                • Children under 14: Consult doctor<br>
+                • Always take with food
+              </div>`,
         natural: "Ginger tea, magnesium-rich foods (dark chocolate, nuts), raspberry leaf tea",
         lifestyle: "Light exercise, warm bath, track symptoms with an app",
-        note: "Avoid excessive salt/caffeine/alcohol before periods."
+        note: "Do not use if you have stomach ulcers, kidney problems, or bleeding disorders."
       },
       jetlag: {
         otc: "Melatonin 0.5-1mg 1hr before bedtime (short-term)",
@@ -166,27 +195,37 @@
 
     function getRemedy(mood) {
       const resultDiv = document.getElementById('result');
+      const conditionNames = {
+        anxious: "Anxiety",
+        tired: "Fatigue",
+        pms: "Period Pain (PMS)",
+        jetlag: "Jet Lag",
+        low_mood: "Low Mood",
+        cant_sleep: "Insomnia"
+      };
       
       if (remedies[mood]) {
         const r = remedies[mood];
-        resultDiv.innerHTML = `          
+        resultDiv.innerHTML = `
+          <div class="recommendation-title">Recommendations for ${conditionNames[mood]}</div>
+          
           <div class="category">
-            <div class="category-title">Over-the-Counter</div>
+            <div class="category-title">OVER-THE-COUNTER OPTIONS</div>
             ${r.otc}
           </div>
           
           <div class="category">
-            <div class="category-title">Natural Remedies</div>
+            <div class="category-title">NATURAL REMEDIES</div>
             ${r.natural}
           </div>
           
           <div class="category">
-            <div class="category-title">Lifestyle Tips</div>
+            <div class="category-title">LIFESTYLE TIPS</div>
             ${r.lifestyle}
           </div>
           
-          <div class="warning" style="margin-top: 1rem;">
-            <strong>Note:</strong> ${r.note}
+          <div class="warning">
+            <strong>Important Note:</strong> ${r.note}
           </div>
         `;
       } else {
