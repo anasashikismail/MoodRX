@@ -8,132 +8,189 @@
   <link rel="manifest" href="manifest.json">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
       padding: 0;
       background: #f0f4f7;
       color: #333;
+      line-height: 1.6;
     }
     header {
       background-color: #4CAF50;
       color: white;
-      padding: 1rem;
+      padding: 1.5rem;
       text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .container {
-      padding: 1rem;
+      padding: 1.5rem;
       max-width: 600px;
       margin: 0 auto;
     }
     .mood-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 0.5rem;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
     button {
-      padding: 0.75rem;
+      padding: 1rem;
       font-size: 1rem;
       background-color: #B2E2F2;
       color: #333;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 80px;
     }
     button:hover {
-      background-color: #76BEE8; 
+      background-color: #76BEE8;
+      transform: translateY(-2px);
+    }
+    button span {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
     }
     .result {
       background: white;
-      padding: 1rem;
-      border-radius: 8px;
+      padding: 1.5rem;
+      border-radius: 10px;
       margin-top: 1rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    .red-flags {
-      background-color: #ffcc00;
-      padding: 0.75rem;
-      margin-top: 0.5rem;
-      border-radius: 12px;
+    .warning {
+      background-color: #FFF3CD;
+      border-left: 4px solid #FFC107;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      border-radius: 4px;
       font-size: 0.9rem;
-      color: #333;
-      display: none; 
-      text-align: center;
+    }
+    .warning strong {
+      color: #856404;
+    }
+    .category {
+      margin-bottom: 1rem;
+    }
+    .category-title {
+      color: #4CAF50;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>MoodRx</h1>
-    <p>Your mood-based remedy assistant</p>
+    <p>Your evidence-based mood remedy assistant</p>
   </header>
+  
   <div class="container">
     <div class="mood-grid">
-      <button onclick="getRemedy('anxious')">😰 Anxious</button>
-      <button onclick="getRemedy('tired')">😴 Tired</button>
-      <button onclick="getRemedy('pms')">🌸 Period Pain</button>
-      <button onclick="getRemedy('jetlag')">✈️ Jetlagged</button>
-      <button onclick="getRemedy('low_mood')">😞 Low Mood</button>
-      <button onclick="getRemedy('cant_sleep')">🌙 Can't Sleep</button>
+      <button onclick="getRemedy('anxious')">
+        <span>😰</span> Anxious
+      </button>
+      <button onclick="getRemedy('tired')">
+        <span>😴</span> Tired
+      </button>
+      <button onclick="getRemedy('pms')">
+        <span>🌸</span> Period Pain
+      </button>
+      <button onclick="getRemedy('jetlag')">
+        <span>✈️</span> Jetlagged
+      </button>
+      <button onclick="getRemedy('low_mood')">
+        <span>😞</span> Low Mood
+      </button>
+      <button onclick="getRemedy('cant_sleep')">
+        <span>🌙</span> Can't Sleep
+      </button>
     </div>
+    
     <div id="result" class="result">
-      <em>Please select a mood to get started.</em>
+      <em>Select a mood to see personalized recommendations</em>
     </div>
-    <div id="red-flags" class="red-flags">
-      🚨 Red Flags: If symptoms persist beyond 3 days, consult a doctor.
+    
+    <div id="warning" class="warning">
+      <strong>Important Safety Information:</strong><br>
+      • These are general suggestions only, not medical advice<br>
+      • Consult a healthcare provider before starting new supplements<br>
+      • Discontinue use if any adverse reactions occur<br>
+      • Persistent symptoms may require professional evaluation
     </div>
   </div>
 
   <script>
     const remedies = {
       anxious: {
-        otc: "Diphenhydramine 25mg (short term use only)",
-        natural: "Chamomile tea, lavender oil inhalation",
-        lifestyle: "Deep breathing, journaling, 10 min walk"
+        otc: "Magnesium glycinate 200-400mg (if deficient) or L-Theanine 100-200mg",
+        natural: "Chamomile tea, lavender oil, box breathing (4-7-8 technique)",
+        lifestyle: "Limit caffeine, 10-min walk, journaling, cold water splash on face",
+        note: "Avoid antihistamines for anxiety – can worsen daytime drowsiness."
       },
       tired: {
-        otc: "Vitamin B complex or Iron if deficient",
-        natural: "Ashwagandha, hydration, power nap",
-        lifestyle: "Morning sunlight, limit screen at night"
+        otc: "Vitamin D3 (if deficient) or electrolyte drink (if dehydrated)",
+        natural: "Hydration, short power nap (20 min), peppermint oil inhalation",
+        lifestyle: "Morning sunlight, consistent sleep schedule, reduce screen time at night",
+        note: "Iron/B12 only if blood test confirms deficiency."
       },
       pms: {
-        otc: "Mefenamic acid 250mg after food",
-        natural: "Hot water bag, ginger tea",
-        lifestyle: "Track cycle, gentle yoga"
+        otc: "Ibuprofen 200-400mg (with food) or heat patch",
+        natural: "Ginger tea, magnesium-rich foods (dark chocolate, nuts), raspberry leaf tea",
+        lifestyle: "Light exercise, warm bath, track symptoms with an app",
+        note: "Avoid excessive salt/caffeine/alcohol before periods."
       },
       jetlag: {
-        otc: "Melatonin 3mg before bed (short-term)",
-        natural: "Chamomile tea, lemon balm",
-        lifestyle: "Sync to local time, light exposure in morning"
+        otc: "Melatonin 0.5-1mg 1hr before bedtime (short-term)",
+        natural: "Tart cherry juice (natural melatonin), hydration, light meals",
+        lifestyle: "Adjust sleep schedule pre-trip, daylight exposure at destination",
+        note: "Avoid alcohol/caffeine during flight."
       },
       low_mood: {
-        otc: "B-complex with folic acid",
-        natural: "Dark chocolate, turmeric milk",
-        lifestyle: "Walk outdoors, talk to a friend"
+        otc: "Omega-3 supplements (EPA/DHA) or Vitamin D3 (if deficient)",
+        natural: "Dark chocolate (70%+ cocoa), saffron tea, cold shower",
+        lifestyle: "Social connection, 30-min walk in nature, gratitude journaling",
+        note: "Persistent low mood >2 weeks needs professional evaluation."
       },
       cant_sleep: {
-        otc: "Diphenhydramine 25mg (occasional use)",
-        natural: "Warm milk, lavender pillow spray",
-        lifestyle: "No caffeine after 6pm, fixed bedtime"
+        otc: "Magnesium glycinate 200mg or chamomile extract",
+        natural: "Warm milk (with nutmeg), weighted blanket, 4-7-8 breathing",
+        lifestyle: "Bedroom pitch dark, no screens 1hr before bed, consistent wake time",
+        note: "Diphenhydramine can cause next-day grogginess (avoid long-term)."
       }
     };
 
     function getRemedy(mood) {
       const resultDiv = document.getElementById('result');
-      const redFlagsDiv = document.getElementById('red-flags');
-
+      
       if (remedies[mood]) {
         const r = remedies[mood];
-        resultDiv.innerHTML = `
-          <h3>Recommended Remedies:</h3>
-          <strong>OTC:</strong> ${r.otc}<br>
-          <strong>Natural:</strong> ${r.natural}<br>
-          <strong>Lifestyle:</strong> ${r.lifestyle}
+        resultDiv.innerHTML = `          
+          <div class="category">
+            <div class="category-title">Over-the-Counter</div>
+            ${r.otc}
+          </div>
+          
+          <div class="category">
+            <div class="category-title">Natural Remedies</div>
+            ${r.natural}
+          </div>
+          
+          <div class="category">
+            <div class="category-title">Lifestyle Tips</div>
+            ${r.lifestyle}
+          </div>
+          
+          <div class="warning" style="margin-top: 1rem;">
+            <strong>Note:</strong> ${r.note}
+          </div>
         `;
-        redFlagsDiv.style.display = 'block'; 
       } else {
         resultDiv.innerHTML = '<em>Please select a mood to get started.</em>';
-        redFlagsDiv.style.display = 'none'; 
       }
     }
   </script>
