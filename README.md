@@ -32,7 +32,7 @@ To create a quick-access, mood-based remedy assistant that:
 ## 🧠 How It Works
 
 1. **User selects a mood** from the list:
-   - 😰 Anxious
+   - 😰 Headache
    - 🌙 Can’t Sleep
    - 🌸 Period Pain
    - 😴 Tired All Day
