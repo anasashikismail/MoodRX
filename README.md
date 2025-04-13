@@ -20,6 +20,13 @@ To create a quick-access, mood-based remedy assistant that:
 - Encourages healthy lifestyle habits
 - Gives **"red flag" warnings** to see a doctor if needed
 
+
+## 👤 Who It's For:
+
+- Healthy adults seeking non-emergency relief for mild, temporary issues
+-People who want alternatives to medication (natural/lifestyle options)
+-Those needing quick reference for common ailments (e.g., travel insomnia)
+
 ---
 
 ## 🧠 How It Works
@@ -47,14 +54,6 @@ To create a quick-access, mood-based remedy assistant that:
 - 🔄 Switch between Allopathic ↔️ Natural
 - 📱 Mobile-first UI (Soft, soothing colors)
 - 📦 Easy to deploy on GitHub Pages
-
----
-
-## 👤 Target Users
-
-- Students & Young Adults
-- Pharmacists & Med Interns
-- Anyone needing quick self-care options
 
 ---
 
