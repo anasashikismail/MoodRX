@@ -43,20 +43,15 @@
     <h1>MoodRx</h1>
     <p>Your mood-based remedy assistant</p>
   </header>
-  <div class="container">
-    <label for="mood">Select your mood:</label>
-    <select id="mood">
-      <option value="">--Choose--</option>
-      <option value="anxious">Anxious</option>
-      <option value="tired">Tired</option>
-      <option value="pms">Period Pain</option>
-      <option value="jetlag">Jetlagged</option>
-      <option value="low_mood">Low Mood</option>
-      <option value="cant_sleep">Can't Sleep</option>
-    </select>
-    <button onclick="getRemedy()">Get Remedy</button>
-    <div class="result" id="result"></div>
-  </div>
+  <div class="mood-grid">
+  <button onclick="getRemedy('anxious')">😰 Anxious</button>
+  <button onclick="getRemedy('tired')">😴 Tired</button>
+  <button onclick="getRemedy('pms')">🌸 Period Pain</button>
+  <button onclick="getRemedy('jetlag')">✈️ Jetlagged</button>
+  <button onclick="getRemedy('low_mood')">😞 Low Mood</button>
+  <button onclick="getRemedy('cant_sleep')">🌙 Can't Sleep</button>
+</div>
+
 
   <script>
     const remedies = {
