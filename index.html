@@ -7,6 +7,68 @@
   <title>MoodRx</title>
   <link rel="manifest" href="manifest.json">
   <style>
+    /* Loading Screen Styles */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+    #disclaimer {
+      max-width: 600px;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.5rem;
+    }
+    #disclaimer h2 {
+      color: #4CAF50;
+      margin-top: 0;
+    }
+    .warning-icon {
+      font-size: 2rem;
+      color: #FF5722;
+      margin-bottom: 1rem;
+    }
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+    #agree-checkbox {
+      margin-right: 0.75rem;
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+    #enter-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #enter-btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    #enter-btn:hover:not(:disabled) {
+      background-color: #3e8e41;
+    }
+
+    /* Main App Styles */
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
@@ -105,47 +167,83 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>MoodRx</h1>
-    <p>Your evidence-based mood remedy assistant</p>
-  </header>
-  
-  <div class="container">
-    <div class="mood-grid">
-      <button onclick="getRemedy('anxious')">
-        <span>😰</span> Anxious
-      </button>
-      <button onclick="getRemedy('tired')">
-        <span>😴</span> Tired
-      </button>
-      <button onclick="getRemedy('pms')">
-        <span>🌸</span> Period Pain
-      </button>
-      <button onclick="getRemedy('jetlag')">
-        <span>✈️</span> Jetlagged
-      </button>
-      <button onclick="getRemedy('low_mood')">
-        <span>😞</span> Low Mood
-      </button>
-      <button onclick="getRemedy('cant_sleep')">
-        <span>🌙</span> Can't Sleep
-      </button>
+  <!-- Loading Screen with Disclaimer -->
+  <div id="loading-screen">
+    <div id="disclaimer">
+      <div class="warning-icon">⚠️</div>
+      <h2>Important Disclaimer</h2>
+      <p><strong>MoodRx is intended for informational and educational purposes only.</strong> It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult with a licensed healthcare provider before taking any medication or herbal remedy, especially if you have a medical condition or are taking other medications.</p>
+      
+      <div class="checkbox-container">
+        <input type="checkbox" id="agree-checkbox">
+        <label for="agree-checkbox">☑️ I understand this is not medical advice</label>
+      </div>
+      
+      <button id="enter-btn" disabled>Enter 
+        MoodRx</button>
     </div>
+  </div>
+
+  <!-- Main App Content (Hidden Initially) -->
+  <div id="app-content" style="display: none;">
+    <header>
+      <h1>MoodRx</h1>
+      <p>Your evidence-based mood remedy assistant</p>
+    </header>
     
-    <div id="result" class="result">
-      <em>Select a mood to see personalized recommendations</em>
-    </div>
-    
-    <div id="warning" class="warning">
-      <strong>Important Safety Information:</strong><br>
-      • These are general suggestions only, not medical advice<br>
-      • Consult a healthcare provider before starting new medications<br>
-      • Discontinue use if any adverse reactions occur<br>
-      • Persistent symptoms may require professional evaluation
+    <div class="container">
+      <div class="mood-grid">
+        <button onclick="getRemedy('anxious')">
+          <span>😰</span> Anxious
+        </button>
+        <button onclick="getRemedy('tired')">
+          <span>😴</span> Tired
+        </button>
+        <button onclick="getRemedy('pms')">
+          <span>🌸</span> Period Pain
+        </button>
+        <button onclick="getRemedy('jetlag')">
+          <span>✈️</span> Jetlagged
+        </button>
+        <button onclick="getRemedy('low_mood')">
+          <span>😞</span> Low Mood
+        </button>
+        <button onclick="getRemedy('cant_sleep')">
+          <span>🌙</span> Can't Sleep
+        </button>
+      </div>
+      
+      <div id="result" class="result">
+        <em>Select a mood to see personalized recommendations</em>
+      </div>
+      
+      <div id="warning" class="warning">
+        <strong>Important Safety Information:</strong><br>
+        • These are general suggestions only, not medical advice<br>
+        • Consult a healthcare provider before starting new medications<br>
+        • Discontinue use if any adverse reactions occur<br>
+        • Persistent symptoms may require professional evaluation
+      </div>
     </div>
   </div>
 
   <script>
+    // Disclaimer Screen Logic
+    const agreeCheckbox = document.getElementById('agree-checkbox');
+    const enterBtn = document.getElementById('enter-btn');
+    const loadingScreen = document.getElementById('loading-screen');
+    const appContent = document.getElementById('app-content');
+
+    agreeCheckbox.addEventListener('change', function() {
+      enterBtn.disabled = !this.checked;
+    });
+
+    enterBtn.addEventListener('click', function() {
+      loadingScreen.style.display = 'none';
+      appContent.style.display = 'block';
+    });
+
+    // MoodRx App Logic
     const remedies = {
       anxious: {
         otc: "Magnesium glycinate 200-400mg (if deficient) or L-Theanine 100-200mg",
