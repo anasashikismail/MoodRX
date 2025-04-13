@@ -176,11 +176,10 @@
       
       <div class="checkbox-container">
         <input type="checkbox" id="agree-checkbox">
-        <label for="agree-checkbox">☑️ I understand this is not medical advice</label>
+        <label for="agree-checkbox">I understand this is not medical advice</label>
       </div>
       
-      <button id="enter-btn" disabled>Enter 
-        MoodRx</button>
+      <button id="enter-btn" disabled>Enter <br><br> MoodRx</button>
     </div>
   </div>
 
@@ -193,8 +192,8 @@
     
     <div class="container">
       <div class="mood-grid">
-        <button onclick="getRemedy('anxious')">
-          <span>😰</span> Anxious
+        <button onclick="getRemedy('headache')">
+          <span>🤕</span> Headache
         </button>
         <button onclick="getRemedy('tired')">
           <span>😴</span> Tired
@@ -245,11 +244,16 @@
 
     // MoodRx App Logic
     const remedies = {
-      anxious: {
-        otc: "Magnesium glycinate 200-400mg (if deficient) or L-Theanine 100-200mg",
-        natural: "Chamomile tea, lavender oil, box breathing (4-7-8 technique)",
-        lifestyle: "Limit caffeine, 10-min walk, journaling, cold water splash on face",
-        note: "Avoid antihistamines for anxiety – can worsen daytime drowsiness."
+      headache: {
+        otc: `Ibuprofen 200-400mg every 6 hours (with food)<br>
+              <div class="dosage">
+                <strong>OR Acetaminophen 500mg every 6 hours</strong><br>
+                • Max 3 days without doctor consultation<br>
+                • Avoid caffeine combination for migraines
+              </div>`,
+        natural: "Peppermint oil (temple massage), magnesium supplements (400mg), cold compress on forehead",
+        lifestyle: "Hydration (2L water/day), dark room rest, neck stretches, limit screen time",
+        note: "Seek emergency care for sudden severe headache or with vision/speech changes."
       },
       tired: {
         otc: "Vitamin D3 (if deficient) or electrolyte drink (if dehydrated)",
@@ -271,7 +275,7 @@
         note: "Do not use if you have stomach ulcers, kidney problems, or bleeding disorders."
       },
       jetlag: {
-        otc: "Melatonin 0.5-1mg 1hr before bedtime (short-term)",
+        otc: "Melatonin 0.5-1mg 30-min before bedtime (short-term)",
         natural: "Tart cherry juice (natural melatonin), hydration, light meals",
         lifestyle: "Adjust sleep schedule pre-trip, daylight exposure at destination",
         note: "Avoid alcohol/caffeine during flight."
@@ -293,7 +297,7 @@
     function getRemedy(mood) {
       const resultDiv = document.getElementById('result');
       const conditionNames = {
-        anxious: "Anxiety",
+        headache: "Headache",
         tired: "Fatigue",
         pms: "Period Pain (PMS)",
         jetlag: "Jet Lag",
