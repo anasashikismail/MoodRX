@@ -22,12 +22,26 @@
     }
     .container {
       padding: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
     }
-    select, button {
-      width: 100%;
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.5rem;
+    }
+    button {
       padding: 0.75rem;
-      margin: 0.5rem 0;
       font-size: 1rem;
+      background-color: #B2E2F2;
+      color: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #76BEE8; 
     }
     .result {
       background: white;
@@ -36,6 +50,16 @@
       margin-top: 1rem;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+    .red-flags {
+      background-color: #ffcc00;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: #333;
+      display: none; 
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -43,15 +67,22 @@
     <h1>MoodRx</h1>
     <p>Your mood-based remedy assistant</p>
   </header>
-  <div class="mood-grid">
-  <button onclick="getRemedy('anxious')">😰 Anxious</button>
-  <button onclick="getRemedy('tired')">😴 Tired</button>
-  <button onclick="getRemedy('pms')">🌸 Period Pain</button>
-  <button onclick="getRemedy('jetlag')">✈️ Jetlagged</button>
-  <button onclick="getRemedy('low_mood')">😞 Low Mood</button>
-  <button onclick="getRemedy('cant_sleep')">🌙 Can't Sleep</button>
-</div>
-
+  <div class="container">
+    <div class="mood-grid">
+      <button onclick="getRemedy('anxious')">😰 Anxious</button>
+      <button onclick="getRemedy('tired')">😴 Tired</button>
+      <button onclick="getRemedy('pms')">🌸 Period Pain</button>
+      <button onclick="getRemedy('jetlag')">✈️ Jetlagged</button>
+      <button onclick="getRemedy('low_mood')">😞 Low Mood</button>
+      <button onclick="getRemedy('cant_sleep')">🌙 Can't Sleep</button>
+    </div>
+    <div id="result" class="result">
+      <em>Please select a mood to get started.</em>
+    </div>
+    <div id="red-flags" class="red-flags">
+      🚨 Red Flags: If symptoms persist beyond 3 days, consult a doctor.
+    </div>
+  </div>
 
   <script>
     const remedies = {
@@ -87,9 +118,9 @@
       }
     };
 
-    function getRemedy() {
-      const mood = document.getElementById('mood').value;
+    function getRemedy(mood) {
       const resultDiv = document.getElementById('result');
+      const redFlagsDiv = document.getElementById('red-flags');
 
       if (remedies[mood]) {
         const r = remedies[mood];
@@ -99,18 +130,20 @@
           <strong>Natural:</strong> ${r.natural}<br>
           <strong>Lifestyle:</strong> ${r.lifestyle}
         `;
+        redFlagsDiv.style.display = 'block'; 
       } else {
         resultDiv.innerHTML = '<em>Please select a mood to get started.</em>';
+        redFlagsDiv.style.display = 'none'; 
       }
     }
   </script>
 
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js');
-  }
-</script>
-
-
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Registration Failed:', err));
+    }
+  </script>
 </body>
 </html>
